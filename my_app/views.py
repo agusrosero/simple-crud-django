@@ -15,6 +15,20 @@ def list_person(request):
     return JsonResponse({'Mensaje': 'Solicitud no valida'})
 
 @csrf_exempt
+def list_by_id(request, id):
+    if request.method == 'GET':
+        person = Person.objects.get(id=id)
+        data = {
+            'id': person.id,
+            'name': person.name,
+            'last_name': person.last_name,
+            'age': person.age,
+            'address': person.address
+        }
+        return JsonResponse({'Persona': data})
+    return JsonResponse({'Mensaje': 'Solicitud no valida'})
+
+@csrf_exempt
 def create_person(request):
     if request.method == 'POST':
         data = json.loads(request.body)
